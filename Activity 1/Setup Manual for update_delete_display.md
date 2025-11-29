@@ -25,4 +25,7 @@ Create a new folder for your project (e.g., C:\wamp64\www\php_crud).
 
 Save the four PHP files (config.php, delete.php, display.php, update.php) inside this new folder.
 
+
 6. Test the Programs: Open your browser and navigate to http://localhost/php_crud/display.php
+
+7. Make sure to insert all of the .sql files into the phpmyadmin server. (number 4).
