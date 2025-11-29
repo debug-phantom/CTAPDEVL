@@ -1,0 +1,4 @@
+ALTER TABLE users
+ADD age INT(3) NULL,
+ADD city_address VARCHAR(100) NULL,
+ADD password VARCHAR(255) NOT NULL DEFAULT '';
