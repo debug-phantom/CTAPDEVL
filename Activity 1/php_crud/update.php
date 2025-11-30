@@ -4,14 +4,22 @@ include 'config.php';
 // --- Part 1: Handle Form Submission (POST Request) ---
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id = mysqli_real_escape_string($conn, $_POST['id']);
+    $student_id = mysqli_real_escape_string($conn, $_POST['student_id']);
     $name = mysqli_real_escape_string($conn, $_POST['name']);
     $email = mysqli_real_escape_string($conn, $_POST['email']);
     $age = mysqli_real_escape_string($conn, $_POST['age']);
     $city_address = mysqli_real_escape_string($conn, $_POST['city_address']);
-    $password = $_POST['password']; // The new password (might be empty)
+    $password = $_POST['password']; 
+
+    // --- Student ID Validation Check (Allows hyphens) ---
+    if (!preg_match('/^[a-zA-Z0-9-]+$/', $student_id)) {
+        echo "Error: Student ID can only contain letters, numbers, and hyphens. <a href='display.php'>Go back</a>";
+        mysqli_close($conn);
+        exit;
+    }
 
     // Start building the SQL query
-    $sql = "UPDATE users SET name='$name', email='$email', age='$age', city_address='$city_address'";
+    $sql = "UPDATE users SET student_id='$student_id', name='$name', email='$email', age='$age', city_address='$city_address'";
 
     // Handle password update ONLY if a new password was provided
     if (!empty($password)) {
@@ -19,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $sql .= ", password='$hashed_password'";
     }
     
-    // Finish the query
+    // Finish the query, ensuring only the current record is updated
     $sql .= " WHERE id=$id";
 
     if (mysqli_query($conn, $sql)) {
@@ -33,11 +41,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id = mysqli_real_escape_string($conn, $_GET['id']);
 
     // Fetch the current record data
-    $sql = "SELECT id, name, email, age, city_address FROM users WHERE id = $id";
+    $sql = "SELECT id, student_id, name, email, age, city_address FROM users WHERE id = $id";
     $result = mysqli_query($conn, $sql);
 
     if (mysqli_num_rows($result) == 1) {
         $row = mysqli_fetch_assoc($result);
+        $current_student_id = $row['student_id'];
         $current_name = $row['name'];
         $current_email = $row['email'];
         $current_age = $row['age'];
@@ -54,6 +63,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <h1>Update User Record</h1>
             <form method="POST" action="update.php">
                 <input type="hidden" name="id" value="<?php echo $id; ?>">
+
+                <label for="student_id">Student ID:</label><br>
+                <input type="text" id="student_id" name="student_id" value="<?php echo htmlspecialchars($current_student_id); ?>" required><br><br>
 
                 <label for="name">Name:</label><br>
                 <input type="text" id="name" name="name" value="<?php echo htmlspecialchars($current_name); ?>" required><br><br>
