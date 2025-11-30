@@ -13,29 +13,34 @@ include 'config.php';
 <p><a href='create.php'>Add a New User</a></p>
 
 <?php
-// IMPORTANT: Select all columns EXCEPT 'password' for security
-$sql = "SELECT id, name, email, age, city_address FROM users";
+// We select all necessary fields, including student_id and created_at.
+// We still EXCLUDE the sensitive 'password' column.
+$sql = "SELECT id, student_id, name, email, age, city_address, created_at FROM users ORDER BY created_at DESC";
 $result = mysqli_query($conn, $sql);
 
 if (mysqli_num_rows($result) > 0) {
     echo "<table border='1'>";
     echo "<tr>
             <th>ID</th>
+            <th>Student ID</th>
             <th>Name</th>
             <th>Email</th>
             <th>Age</th>
             <th>City Address</th>
+            <th>Date Created</th>
             <th>Actions</th>
           </tr>";
 
     // Output data of each row
-    while($row = mysqli_fetch_assoc($result)) { // Corrected function call
+    while($row = mysqli_fetch_assoc($result)) { 
         echo "<tr>";
         echo "<td>" . $row["id"]. "</td>";
+        echo "<td>" . $row["student_id"]. "</td>";
         echo "<td>" . $row["name"]. "</td>";
         echo "<td>" . $row["email"]. "</td>";
         echo "<td>" . $row["age"]. "</td>";
         echo "<td>" . $row["city_address"]. "</td>";
+        echo "<td>" . $row["created_at"]. "</td>"; // Display the timestamp
         echo "<td>";
         // Links for Update and Delete
         echo "<a href='update.php?id=" . $row["id"] . "'>Edit</a> | ";
