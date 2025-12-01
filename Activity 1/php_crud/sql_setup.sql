@@ -1,8 +1,8 @@
 -- Create the database if it doesn't exist
-CREATE DATABASE IF NOT EXISTS test_db;
+CREATE DATABASE IF NOT EXISTS jamescastro_db;
 
 -- Use the database
-USE test_db;
+USE jamescastro_db;
 
 -- Create the users table with all required fields
 CREATE TABLE IF NOT EXISTS users (
@@ -13,4 +13,5 @@ CREATE TABLE IF NOT EXISTS users (
     city_address VARCHAR(100) NULL,
     password VARCHAR(255) NOT NULL, -- 255 for securely stored password hash (e.g., bcrypt)
     reg_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+
 );
