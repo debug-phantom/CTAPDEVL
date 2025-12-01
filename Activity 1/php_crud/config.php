@@ -3,7 +3,7 @@
 $servername = "localhost";
 $username = "root"; 
 $password = "";     
-$dbname = "test_db";
+$dbname = "jamescastro_db";
 $port = 3306; 
 
 // Create connection
@@ -15,3 +15,4 @@ if (!$conn) {
 }
 
 ?>
+
