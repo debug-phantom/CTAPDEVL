@@ -4,7 +4,7 @@ include 'config.php';
 // --- Part 1: Handle Form Submission (POST Request) ---
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id = mysqli_real_escape_string($conn, $_POST['id']);
-    $role_id = mysqli_real_escape_string($conn, $_POST['role_id']); // <-- CHANGED
+    $role_id = mysqli_real_escape_string($conn, $_POST['role_id']); 
     $name = mysqli_real_escape_string($conn, $_POST['name']);
     $email = mysqli_real_escape_string($conn, $_POST['email']);
     $age = mysqli_real_escape_string($conn, $_POST['age']);
@@ -110,4 +110,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 mysqli_close($conn);
+
 ?>
